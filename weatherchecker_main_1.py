@@ -3,20 +3,6 @@ import streamlit as st
 import requests
 import datetime as dt
 import pytz
-
-st.title('Weather App')
-
-name = st.text_input('Enter your name', '')
-if name:
-    st.write(f'Hello {name}, welcome to the weather app!')
-location = st.text_input('Where are you now? ')
-if location: 
-
-    API_KEY = "UiJOvBlqWefW45dmeRtHTylrQHF0Pmm8"
-    url = f"https://api.tomorrow.io/v4/weather/realtime?location={location}&apikey={API_KEY}"
-    headers = {"accept": "application/json"}
-    response = requests.get(url, headers=headers)
-
 #different weather codes
 weather_code = {
       0: "Unknown",
@@ -44,50 +30,65 @@ weather_code = {
       7102: "Light Ice Pellets",
       8000: "Thunderstorm"
     }
-if response.status_code == 200:
 
-    weather_data = response.json()
-    # Here you can handle the weather data as needed
-    # Extracting temperature in Celsius
-    temperature_in_celsius = (weather_data['data']['values']['temperature'])
-    # Here we get the humidity
-    humidity= (weather_data ['data']['values']['humidity'])
-    condition= (weather_data ['data']['values']['weatherCode'])
-    local_time= (weather_data ['data']['time'])
-    local_time_obj=dt.datetime.strptime(local_time, "%Y-%m-%dT%H:%M:%SZ")
-    friendly_local_time=local_time_obj.strftime("%A, %B %d, %Y, %I:%M %p")
+st.title('Weather App')
 
-    # Print the temperature in Celsius
-    st.write(f"""Current date ad time at your location is {friendly_local_time},
-    the weather is {weather_code[condition]} and the temperature in {weather_data['location']['name']}
-    is {temperature_in_celsius:.2f}°C. The humidity is {humidity}%.""")
-else:
-    st.write("Failed to retrieve weather data. Please check the location or try again later.")
+name = st.text_input('Enter your name', '')
+if name:
+    st.write(f'Hello {name}, welcome to the weather app!')
+location = st.text_input('Where are you now? ')
+if location: 
+
+    API_KEY = "UiJOvBlqWefW45dmeRtHTylrQHF0Pmm8"
+    url = f"https://api.tomorrow.io/v4/weather/realtime?location={location}&apikey={API_KEY}"
+    headers = {"accept": "application/json"}
+    response = requests.get(url, headers=headers)
+
+
+    if response.status_code == 200:
+
+        weather_data = response.json()
+        # Here you can handle the weather data as needed
+        # Extracting temperature in Celsius
+        temperature_in_celsius = (weather_data['data']['values']['temperature'])
+        # Here we get the humidity
+        humidity= (weather_data ['data']['values']['humidity'])
+        condition= (weather_data ['data']['values']['weatherCode'])
+        local_time= (weather_data ['data']['time'])
+        local_time_obj=dt.datetime.strptime(local_time, "%Y-%m-%dT%H:%M:%SZ")
+        friendly_local_time=local_time_obj.strftime("%A, %B %d, %Y, %I:%M %p")
+    
+        # Print the temperature in Celsius
+        st.write(f"""Current date ad time at your location is {friendly_local_time},
+        the weather is {weather_code[condition]} and the temperature in {weather_data['location']['name']}
+        is {temperature_in_celsius:.2f}°C. The humidity is {humidity}%.""")
+    else:
+        st.write("Failed to retrieve weather data. Please check the location or try again later.")
 #now let's see the weather in your next destination
 destination= st.text_input ('Where do you want to go? ')
+if destination:
 
+    url = f"https://api.tomorrow.io/v4/weather/realtime?location={destination}&apikey={API_KEY}"
+    headers = {"accept": "application/json"}
+    response = requests.get(url, headers=headers)
 
-url = f"https://api.tomorrow.io/v4/weather/realtime?location={destination}&apikey={API_KEY}"
-headers = {"accept": "application/json"}
-response = requests.get(url, headers=headers)
-
-if response.status_code == 200:
-    weather_data = response.json()
-    # Here you can handle the weather data as needed
-    # Extracting temperature in Celsius
-    temperature_in_celsius = (weather_data['data']['values']['temperature'])
-    # Here we get the humidity
-    humidity= (weather_data ['data']['values']['humidity'])
-    condition= (weather_data ['data']['values']['weatherCode'])
-    local_time_destination= (weather_data ['data']['time'])
-    local_time_obj_destination=dt.datetime.strptime(local_time_destination, "%Y-%m-%dT%H:%M:%SZ")
-    friendly_local_time_destination=local_time_obj_destination.strftime("%A, %B %d, %Y, %I:%M %p")
-    # Print the temperature in Celsius
-    st.write(f"""Current date ad time at your location is {friendly_local_time_destination}
-          The weather at your destination {weather_code[condition]}
-          the temperature in {weather_data['location']['name']} is {temperature_in_celsius:.2f}°C. 
-          The humidity is {humidity}%.""")
-else:
-    st.write("Failed to retrieve weather data. Please check the location or try again later.")
+    if response.status_code == 200:
+        weather_data = response.json()
+        # Here you can handle the weather data as needed
+        # Extracting temperature in Celsius
+        temperature_in_celsius = (weather_data['data']['values']['temperature'])
+        # Here we get the humidity
+        humidity= (weather_data ['data']['values']['humidity'])
+        condition= (weather_data ['data']['values']['weatherCode'])
+        local_time_destination= (weather_data ['data']['time'])
+        local_time_obj_destination=dt.datetime.strptime(local_time_destination, "%Y-%m-%dT%H:%M:%SZ")
+        friendly_local_time_destination=local_time_obj_destination.strftime("%A, %B %d, %Y, %I:%M %p")
+        # Print the temperature in Celsius
+        st.write(f"""Current date ad time at your location is {friendly_local_time_destination}
+              The weather at your destination {weather_code[condition]}
+              the temperature in {weather_data['location']['name']} is {temperature_in_celsius:.2f}°C. 
+              The humidity is {humidity}%.""")
+    else:
+        st.write("Failed to retrieve weather data. Please check the location or try again later.")
 
 
