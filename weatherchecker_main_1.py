@@ -9,7 +9,7 @@ st.title('Weather App')
 name = st.text_input('Enter your name', '')
 if name:
     st.write(f'Hello {name}, welcome to the weather app!')
-location = input('Where are you now? ')
+location = st.text_input('Where are you now? ')
 
 API_KEY = "UiJOvBlqWefW45dmeRtHTylrQHF0Pmm8"
 url = f"https://api.tomorrow.io/v4/weather/realtime?location={location}&apikey={API_KEY}"
@@ -63,7 +63,7 @@ if response.status_code == 200:
 else:
     print("Failed to retrieve weather data. Please check the location or try again later.")
 #now let's see the weather in your next destination
-destination= input ('Where do you want to go? ')
+destination= st.text_input ('Where do you want to go? ')
 
 url = f"https://api.tomorrow.io/v4/weather/realtime?location={destination}&apikey={API_KEY}"
 headers = {"accept": "application/json"}
