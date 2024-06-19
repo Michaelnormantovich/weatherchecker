@@ -10,11 +10,12 @@ name = st.text_input('Enter your name', '')
 if name:
     st.write(f'Hello {name}, welcome to the weather app!')
 location = st.text_input('Where are you now? ')
+if location: 
 
-API_KEY = "UiJOvBlqWefW45dmeRtHTylrQHF0Pmm8"
-url = f"https://api.tomorrow.io/v4/weather/realtime?location={location}&apikey={API_KEY}"
-headers = {"accept": "application/json"}
-response = requests.get(url, headers=headers)
+    API_KEY = "UiJOvBlqWefW45dmeRtHTylrQHF0Pmm8"
+    url = f"https://api.tomorrow.io/v4/weather/realtime?location={location}&apikey={API_KEY}"
+    headers = {"accept": "application/json"}
+    response = requests.get(url, headers=headers)
 
 #different weather codes
 weather_code = {
