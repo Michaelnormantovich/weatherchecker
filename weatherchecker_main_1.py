@@ -1,4 +1,5 @@
 #pip requirements are import requests
+import streamlit as st
 import requests
 import datetime as dt
 import pytz
@@ -74,7 +75,6 @@ if response.status_code == 200:
     local_time_destination= (weather_data ['data']['time'])
     local_time_obj_destination=dt.datetime.strptime(local_time_destination, "%Y-%m-%dT%H:%M:%SZ")
     friendly_local_time_destination=local_time_obj_destination.strftime("%A, %B %d, %Y, %I:%M %p")
-
     # Print the temperature in Celsius
     print(f"""Current date ad time at your location is {friendly_local_time_destination}
           The weather at your destination {weather_code[condition]}
