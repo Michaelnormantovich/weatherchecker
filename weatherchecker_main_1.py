@@ -57,11 +57,11 @@ if response.status_code == 200:
     friendly_local_time=local_time_obj.strftime("%A, %B %d, %Y, %I:%M %p")
 
     # Print the temperature in Celsius
-    print(f"""Current date ad time at your location is {friendly_local_time},
+    st.write(f"""Current date ad time at your location is {friendly_local_time},
     the weather is {weather_code[condition]} and the temperature in {weather_data['location']['name']}
     is {temperature_in_celsius:.2f}°C. The humidity is {humidity}%.""")
 else:
-    print("Failed to retrieve weather data. Please check the location or try again later.")
+    st.write("Failed to retrieve weather data. Please check the location or try again later.")
 #now let's see the weather in your next destination
 destination= st.text_input ('Where do you want to go? ')
 
@@ -81,11 +81,11 @@ if response.status_code == 200:
     local_time_obj_destination=dt.datetime.strptime(local_time_destination, "%Y-%m-%dT%H:%M:%SZ")
     friendly_local_time_destination=local_time_obj_destination.strftime("%A, %B %d, %Y, %I:%M %p")
     # Print the temperature in Celsius
-    print(f"""Current date ad time at your location is {friendly_local_time_destination}
+    st.write(f"""Current date ad time at your location is {friendly_local_time_destination}
           The weather at your destination {weather_code[condition]}
           the temperature in {weather_data['location']['name']} is {temperature_in_celsius:.2f}°C. 
           The humidity is {humidity}%.""")
 else:
-    print("Failed to retrieve weather data. Please check the location or try again later.")
+    st.write("Failed to retrieve weather data. Please check the location or try again later.")
 
 
